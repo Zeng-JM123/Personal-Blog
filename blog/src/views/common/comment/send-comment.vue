@@ -2,40 +2,40 @@
   <div class="comment-info">
     <div class="title">期待有您的评论</div>
     <div class="user-info">
-      <label for="user-name">昵称：<input type="text" id="user-name" placeholder="请输入昵称"></label>
-      <label for="email">邮箱：<input type="text" id="email" placeholder="请输入邮箱"></label>
+      <label for="user-name">昵称：<input type="text" id="user-name" placeholder="请输入昵称" v-model="commentsForm.userName"></label>
+      <label for="email">邮箱：<input type="text" id="email" placeholder="请输入邮箱" v-model="commentsForm.email"></label>
     </div>
-    <textarea id="inp-comment" cols="90" rows="5" placeholder="请输入您的评论"></textarea>
+    <textarea id="inp-comment" cols="90" rows="5" placeholder="请输入您的评论" v-model="commentsForm.comments"></textarea>
     <button class="btn" @click="sendComment">提交评论</button>
   </div>
 </template>
 
 <script>
 import api from '@/api/index'
+import escape from '@/utils/common'
 export default {
   data(){
     return {
-      commontsForm: {
+      commentsForm: {
         userName: '',
         email: '',
         comments: ''
-      }
+      },
+      test: ''
     }
   },
   methods: {
     sendComment(){
       var path = location.pathname;
       var query = location.search;
-      var userName = document.getElementById('user-name');
-      var email = document.getElementById('email');
-      var inpComment = document.getElementById('inp-comment');
-      this.commontsForm.userName = userName.value;
-      this.commontsForm.email = email.value;
-      this.commontsForm.comments = inpComment.value;
-      console.log(this.commontsForm)
+      for(var prop in this.commentsForm){
+        this.commentsForm[prop] = escape(this.commentsForm[prop])
+      }
       if(path == '/guestbook'){  
         if(confirm('确定要提交吗？')){
-          api.insertCommentByQuestbook(this.commontsForm)
+          api.insertCommentByQuestbook(this.commentsForm)
+          this.commentsForm = {};
+          this.$router.go(0)
         }else{
           return
         }
@@ -44,7 +44,7 @@ export default {
         if(query){
           var id = query.split('?')[1].split('=')[1];
           if(confirm('确定要提交吗？')){
-            api.insertCommentByDetail(Object.assign({}, this.commontsForm, {id: id}))
+            api.insertCommentByDetail(Object.assign({}, this.commentsForm, {id: id}))
           }else{
             return
           }

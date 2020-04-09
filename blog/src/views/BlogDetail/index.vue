@@ -2,7 +2,7 @@
   <div class="detail">
     <div class="title">{{blogDetail.title}}</div>
     <div class="info">发布于：铭铭 | 发布时间：{{blogDetail.time}} | 浏览：{{blogDetail.views}} | 标签：{{blogDetail.tags}}</div>
-    <div class="detail-content" v-html=blogDetail.content></div>
+    <div class="detail-content" v-html="$xss(blogDetail.content)"></div>
     <send-comment></send-comment>
     <show-comments></show-comments>
   </div>
@@ -38,7 +38,6 @@ export default {
         tags: result.tags,
         content: result.content
       }
-      console.log(this.blogDetail)
       window.scrollTo(0,0)
     })
     

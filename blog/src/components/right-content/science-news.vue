@@ -2,7 +2,8 @@
   <div class="science-news">
     <p class="title">科技快报</p>
     <div class="swiper">
-      <swiper/>
+      <!-- <swiper/> -->
+      <img class="science-img" src="@/assets/images/14.jpg" alt="">
     </div>
     <a :href="news.link" v-for="(news,i) in scienceNewsList" :key="i"><p class="news">{{news.title}}</p></a>
   </div>
@@ -33,8 +34,12 @@ export default {
   .science-news{
     .swiper{
       width: 100%;
-      height: 120px;
+      height: 140px;
       margin: 3px 0;
+      .science-img{
+        width: 100%;
+        height: 100%;
+      }
     }
     .title{
       color: #fff;

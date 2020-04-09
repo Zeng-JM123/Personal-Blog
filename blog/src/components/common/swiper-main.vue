@@ -16,11 +16,11 @@ export default {
       curPage: 1,
       timer: null,
       imgList: [
-        {src: require('../../assets/images/01.jpg')},
-        {src: require('../../assets/images/02.jpg')},
-        {src: require('../../assets/images/03.jpg')},
-        {src: require('../../assets/images/04.jpg')},
-        {src: require('../../assets/images/05.jpg')},
+        {src: require('../../assets/images/9.png')},
+        {src: require('../../assets/images/10.jpg')},
+        {src: require('../../assets/images/16.jpg')},
+        {src: require('../../assets/images/12.jpg')},
+        {src: require('../../assets/images/13.jpg')},
       ],
       len: 0,
     }
@@ -48,7 +48,7 @@ export default {
           this.curPage = 0;
         }
         ++this.curPage;
-      }, 5000);
+      }, 8000);
     },
     jumpPage(i){
       clearInterval(this.timer)

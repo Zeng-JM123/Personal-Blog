@@ -6,10 +6,10 @@
       </div>
       <div class="right-swiper">
         <div class="top-swiper small">
-          <img src="@/assets/images/06.jpg" alt="">
+          <img src="@/assets/images/15.jpg" alt="">
         </div>
         <div class="bottom-swiper small">
-          <img src="@/assets/images/07.jpg" alt="">
+          <img src="@/assets/images/11.jpg" alt="">
         </div>
       </div>
     </div>
@@ -28,8 +28,8 @@
       </div>
     </div>
     <!-- 测试xss注入，拦截onclick事件 -->
-    <!-- <p v-html="test"></p>
-    <p v-html="$xss(test)"></p> -->
+    <!-- <p v-html="test"></p> -->
+    <!-- <p v-html="$xss(test)"></p> -->
     <div class="pagination">
       <Pagination @func="queryBlog"/>
     </div>

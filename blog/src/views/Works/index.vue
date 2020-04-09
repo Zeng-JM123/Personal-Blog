@@ -2,7 +2,7 @@
   <div class="works">
     <router-link to="/home"><h2 class="back rotate">回到首页</h2></router-link>
     <h2 class="title rotate">作品展示</h2>
-    <ul class="img-list" @click="showDetail($event)">
+    <ul class="img-list clearfix" @click="showDetail($event)">
       <li class="item-img" v-for="(img, i) in imgList" :key="i" :index="i"><img :src="img.src" alt=""></li>
     </ul>
     <div class="layer" v-show="isShowLayer" @click="closeLayer"></div>
@@ -24,7 +24,8 @@ export default {
       imgList: [],
       curIndex: 5,
       isShowLayer: false,
-      column: ''
+      column: '',
+      imgLength: 9
     }
   },
   methods: {
@@ -48,30 +49,45 @@ export default {
         this.curIndex = 1
       }
       this.curIndex = this.curIndex + 1;
-    }
+    },
+    getData(num = this.imgLength){
+      api.queryWorks({params: num}).then(resp => {
+        var result = resp.data.data;
+        var temp = [];
+        for(let i = 0; i < result.length; i++){
+          var obj = {};
+          obj.title = result[i].title;
+          obj.link = '/detail?id=' + result[i].id;
+          // obj.src = 'http://118.178.178.159:9090/getSrc?path=' + result[i].pic_path;
+          obj.src = this.baseURL + '/getSrc?path=' + result[i].pic_path;
+          temp.push(obj)
+        }
+        this.imgList = temp;
+      })
+    },
   },
   created(){
-    api.queryWorks().then(resp => {
-      var result = resp.data.data;
-      var temp = [];
-      for(let i = 0; i < result.length; i++){
-        var obj = {};
-        obj.title = result[i].title;
-        obj.link = '/detail?id=' + result[i].id;
-        obj.src = 'http://127.0.0.1:9090/getSrc?path=' + result[i].pic_path;
-        temp.push(obj)
+    this.getData()
+  },
+  mounted(){
+    window.onscroll = () => {
+      var clientHeight = document.documentElement.clientHeight;
+      var scrollTop = document.documentElement.scrollTop;
+      var offsetHeight = document.documentElement.offsetHeight;
+      if(clientHeight + scrollTop == offsetHeight){
+        this.imgLength += 5;
+        this.getData(this.imgLength)
       }
-      this.imgList = temp;
-    })
+    }
   }
 }
 </script>
 
 <style lang="scss">
 .works{
-  overflow-x: hidden;
   background-color: #000;
   position: relative;
+  // min-height: 100vh;
   .layer{
     width: 100%;
     height: 100%;
@@ -148,22 +164,31 @@ export default {
   .title{
     top: 20vh;
   }
+  .clearfix:after{/*伪元素是行内元素 正常浏览器清除浮动方法*/
+    content: "";
+    display: block;
+    height: 0;
+    clear:both;
+    visibility: hidden;
+  }
   .img-list{
     width: 1000px;
     margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    column-count: 3;
+    column-gap: 10px;
+    // display: flex;
+    // justify-content: space-between;
+    // flex-wrap: wrap;
     perspective: 800;
-    transform: rotateX(45deg) rotateZ(45deg);
+    transform: rotateX(40deg) rotateZ(40deg);
     .item-img{
       width: 320px;
-      height: 200px;
       overflow: hidden;
-      margin: 10px 0;
+      margin: 5px;
+      width: 100%;
+      height: 100%;
       img{
         width: 100%;
-        height: 100%;
         cursor: pointer;
       }
       img:hover{

@@ -10,24 +10,26 @@ var api = {
   queryBlogDetail(params){
     return axios.get('/queryBlogDetail', params)
   },
-  queryWorks(){
-    return axios.get('queryWorks')
+  queryWorks(params){
+    return axios.get('/queryWorks', params)
   },
   queryTagsRank(){
-    return axios.get('queryTagsRank')
+    return axios.get('/queryTagsRank')
   },
   queryCommentByQuestbook(){
-    return axios.get('queryCommentByQuestbook')
+    return axios.get('/queryCommentByQuestbook')
   },
   insertCommentByQuestbook(params){
-    return axios.post('insertCommentByQuestbook', params)
+    return axios.post('/insertCommentByQuestbook', params)
   },
   insertCommentByDetail(params){
-    return axios.post('insertCommentByDetail', params)
+    return axios.post('/insertCommentByDetail', params)
   },
   queryCommentByDetail(params){
-    // console.log('queryCommentByDetail?id=' + params)
-    return axios.get('queryCommentByDetail?id=' + params)
+    return axios.get('/queryCommentByDetail?id=' + params)
+  },
+  testXss(params){
+    return axios.get('/testXss?userName=' + params)
   }
 }
 

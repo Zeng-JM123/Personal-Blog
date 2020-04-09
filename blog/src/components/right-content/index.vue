@@ -2,6 +2,7 @@
   <div class="right-content">
     <div class="wrapper">
       <science-news></science-news>
+      <!-- <img class="science-img" src="@/assets/images/11.jpg" alt=""> -->
     </div>
     <div class="wrapper">
       <hot-news></hot-news>
